@@ -317,5 +317,8 @@
   "Panel layout could not be restored: {error}": "Die Bereichsanordnung konnte nicht wiederhergestellt werden: {error}",
   "Panel move was not applied: {error}": "Das Verschieben des Bereichs wurde nicht ausgeführt: {error}",
   "{name} is installed": "{name} ist installiert",
-  "{name} is installed and in use: face recognition is on": "{name} ist installiert und in Gebrauch: Gesichtserkennung ist eingeschaltet"
+  "{name} is installed and in use: face recognition is on": "{name} ist installiert und in Gebrauch: Gesichtserkennung ist eingeschaltet",
+  "Add {n} photo{} to “{}”": "{n} Foto{0} zu „{1}“ hinzufügen",
+  "{n} already there": "{n} bereits enthalten",
+  "Add “{keyword}” to {n} photo{}": "„{keyword}“ zu {n} Foto{} hinzufügen"
 }

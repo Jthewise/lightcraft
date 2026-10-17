@@ -25,6 +25,7 @@ mod dialog_settings_text;
 mod dialog_tab;
 mod dialogs;
 mod docking_acceptance;
+mod drag_contract;
 mod drop_import;
 mod edit_layout;
 mod empty_library;

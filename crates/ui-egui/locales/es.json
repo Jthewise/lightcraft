@@ -2390,5 +2390,13 @@
   "Top bar": "Barra superior",
   "Tool strip": "Barra de herramientas",
   "Bottom bar": "Barra inferior",
-  "Prevent G-SYNC/FreeSync flicker (applies at next launch)": "Evitar el parpadeo de G-SYNC/FreeSync (se aplica al reiniciar)"
+  "Prevent G-SYNC/FreeSync flicker (applies at next launch)": "Evitar el parpadeo de G-SYNC/FreeSync (se aplica al reiniciar)",
+  "Can't add to an album folder": "No se puede añadir a una carpeta de álbumes",
+  "An album folder holds albums, not photos: drop on an album inside it": "Una carpeta de álbumes contiene álbumes, no fotos: suéltalas en un álbum de dentro",
+  "Can't add to a smart album": "No se puede añadir a un álbum inteligente",
+  "A smart album's rules choose its photos: change them with Edit Smart Album…": "Las reglas de un álbum inteligente eligen sus fotos: cámbialas con Editar álbum inteligente…",
+  "Add keywords in the Keyword List": "Añade palabras clave en la Lista de palabras clave",
+  "Give photos a keyword in the Keyword List (Window ▸ Keywords, K): drop them on it there": "Para dar una palabra clave a las fotos, usa la Lista de palabras clave (Ventana → Palabras clave, K): suéltalas allí sobre ella",
+  "Already on these photos": "Ya las tienen estas fotos",
+  "Can't go inside itself": "No puede ir dentro de sí misma"
 }
