@@ -319,6 +319,6 @@
   "{name} is installed": "{name} está instalado",
   "{name} is installed and in use: face recognition is on": "{name} está instalado y en uso: el reconocimiento facial está activado",
   "Add {n} photo{} to “{}”": "Añadir {n} foto{0} a “{1}”",
-  "{n} already there": "{n} ya estaban",
+  "{n} already there": "ya en el álbum: {n}",
   "Add “{keyword}” to {n} photo{}": "Añadir “{keyword}” a {n} foto{}"
 }
