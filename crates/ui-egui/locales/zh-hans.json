@@ -2389,5 +2389,8 @@
   "Set up name suggestions…": "设置姓名建议…",
   "Top bar": "顶部栏",
   "Tool strip": "工具栏",
-  "Bottom bar": "底部栏"
+  "Bottom bar": "底部栏",
+  "Drag to move, or use the arrow keys": "拖动以移动，或使用方向键",
+  "A group can't go inside itself": "组不能放入它自己里面",
+  "Groups can't nest any deeper": "组不能再嵌套得更深"
 }

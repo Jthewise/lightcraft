@@ -2315,5 +2315,8 @@
   "Set up name suggestions…": "Skonfiguruj propozycje imion…",
   "Top bar": "Górny pasek",
   "Tool strip": "Pasek narzędzi",
-  "Bottom bar": "Dolny pasek"
+  "Bottom bar": "Dolny pasek",
+  "Drag to move, or use the arrow keys": "Przeciągnij, aby przenieść, lub użyj strzałek",
+  "A group can't go inside itself": "Grupa nie może znaleźć się wewnątrz samej siebie",
+  "Groups can't nest any deeper": "Grup nie można zagnieżdżać głębiej"
 }
