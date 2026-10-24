@@ -317,5 +317,6 @@
   "Panel layout could not be restored: {error}": "Non è stato possibile ripristinare la disposizione dei pannelli: {error}",
   "Panel move was not applied: {error}": "Lo spostamento del pannello non è stato applicato: {error}",
   "{name} is installed": "{name} è installato",
-  "{name} is installed and in use: face recognition is on": "{name} è installato e in uso: il riconoscimento dei volti è attivo"
+  "{name} is installed and in use: face recognition is on": "{name} è installato e in uso: il riconoscimento dei volti è attivo",
+  "It leads back to itself through “{}”: change the rules of one album on the loop (Edit Smart Album…)": "Ritorna su se stesso attraverso l'album “{}”: modifica le regole di un album del ciclo (Modifica album smart…)"
 }

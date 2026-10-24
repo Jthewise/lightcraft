@@ -2356,5 +2356,7 @@
   "Set up name suggestions…": "Määritä nimiehdotukset…",
   "Top bar": "Yläpalkki",
   "Tool strip": "Työkalupalkki",
-  "Bottom bar": "Alapalkki"
+  "Bottom bar": "Alapalkki",
+  "This album is in a loop, so it shows nothing": "Tämä albumi on silmukassa, joten se ei näytä mitään",
+  "It tests itself: change its rules (Edit Smart Album…)": "Se testaa itseään: muuta sen sääntöjä (Muokkaa älyalbumia…)"
 }

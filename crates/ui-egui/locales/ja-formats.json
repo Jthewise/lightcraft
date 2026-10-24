@@ -317,5 +317,6 @@
   "Panel layout could not be restored: {error}": "パネル配置を復元できませんでした：{error}",
   "Panel move was not applied: {error}": "パネルの移動は適用されませんでした：{error}",
   "{name} is installed": "{name} をインストールしました",
-  "{name} is installed and in use: face recognition is on": "{name} をインストールして使用中です：顔認識はオンです"
+  "{name} is installed and in use: face recognition is on": "{name} をインストールして使用中です：顔認識はオンです",
+  "It leads back to itself through “{}”: change the rules of one album on the loop (Edit Smart Album…)": "アルバム「{}」を通じて自分自身に戻っています。循環しているアルバムのどれかの条件を変更してください（スマートアルバムを編集…）"
 }

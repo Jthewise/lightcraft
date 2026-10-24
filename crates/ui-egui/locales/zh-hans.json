@@ -2389,5 +2389,7 @@
   "Set up name suggestions…": "设置姓名建议…",
   "Top bar": "顶部栏",
   "Tool strip": "工具栏",
-  "Bottom bar": "底部栏"
+  "Bottom bar": "底部栏",
+  "This album is in a loop, so it shows nothing": "此相册处于循环中，因此不显示任何内容",
+  "It tests itself: change its rules (Edit Smart Album…)": "它引用了自身：请更改其规则（编辑智能相册…）"
 }

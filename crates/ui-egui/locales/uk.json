@@ -2386,5 +2386,7 @@
   "Top bar": "Верхня панель",
   "Tool strip": "Панель інструментів",
   "Bottom bar": "Нижня панель",
-  "Prevent G-SYNC/FreeSync flicker (applies at next launch)": "Запобігати мерехтінню G-SYNC/FreeSync (після перезапуску)"
+  "Prevent G-SYNC/FreeSync flicker (applies at next launch)": "Запобігати мерехтінню G-SYNC/FreeSync (після перезапуску)",
+  "This album is in a loop, so it shows nothing": "Цей альбом потрапив у цикл, тому нічого не показує",
+  "It tests itself: change its rules (Edit Smart Album…)": "Він перевіряє сам себе: змініть його правила (Редагувати смарт-альбом…)"
 }

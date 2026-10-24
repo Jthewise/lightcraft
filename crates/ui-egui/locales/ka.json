@@ -3659,5 +3659,7 @@
   "Top bar": "ზედა ზოლი",
   "Tool strip": "ხელსაწყოების ზოლი",
   "Bottom bar": "ქვედა ზოლი",
-  "Prevent G-SYNC/FreeSync flicker (applies at next launch)": "G-SYNC/FreeSync-ის ციმციმის თავიდან აცილება (ამოქმედდება შემდეგი გაშვებისას)"
+  "Prevent G-SYNC/FreeSync flicker (applies at next launch)": "G-SYNC/FreeSync-ის ციმციმის თავიდან აცილება (ამოქმედდება შემდეგი გაშვებისას)",
+  "This album is in a loop, so it shows nothing": "ეს ალბომი ციკლშია, ამიტომ არაფერს აჩვენებს",
+  "It tests itself: change its rules (Edit Smart Album…)": "ის საკუთარ თავს ამოწმებს: შეცვალეთ მისი წესები (სმარტ-ალბომის რედაქტირება…)"
 }
