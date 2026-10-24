@@ -162,6 +162,11 @@ are the same in every version, so serve them with `Cache-Control: no-cache` (not
   (no params: a command that takes photo ids then acts on the selection). Any other text that
   isn't an object rejects the promise and runs nothing, as the control channel and MCP do, so a
   typo can't run a command on the selection. This is how the headless-Chrome checks drive the page.
+  `await lightcraft.request("ui.inspect", {})` calls any method of the control channel
+  (`docs/control-protocol.md`: `engine.execute`, `ui.inspect`, `ui.menu.invoke`, …) and resolves to
+  its result as an object, as VectorCraft's `window.vectorcraft` and PhotoCraft's
+  `window.photocraft` do, so an agent or a host app drives the page with the commands it sends the
+  desktop app. Errors reject with an `Error`.
 - **The page title names the open photo**: `<file name> — LightCraft`, with ` •` after the name while
   changes are not yet written to browser storage (`LightcraftApp::page_title`). eframe's web runner
   ignores the window title the desktop app sets, and a host that embeds the page reads this title to
