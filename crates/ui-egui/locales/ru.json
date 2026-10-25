@@ -2605,5 +2605,6 @@
   "Top bar": "Верхняя панель",
   "Tool strip": "Панель инструментов",
   "Bottom bar": "Нижняя панель",
-  "Prevent G-SYNC/FreeSync flicker (applies at next launch)": "Предотвращать мерцание G-SYNC/FreeSync (после перезапуска)"
+  "Prevent G-SYNC/FreeSync flicker (applies at next launch)": "Предотвращать мерцание G-SYNC/FreeSync (после перезапуска)",
+  "Keywords and presets apply to new files only, not to photos already in Local": "Ключевые слова и пресеты применяются только к новым файлам, а не к фото, которые уже есть в «Локальных»"
 }

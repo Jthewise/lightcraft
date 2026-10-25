@@ -2399,5 +2399,6 @@
   "Top bar": "Barra superior",
   "Tool strip": "Barra de herramientas",
   "Bottom bar": "Barra inferior",
-  "Prevent G-SYNC/FreeSync flicker (applies at next launch)": "Evitar el parpadeo de G-SYNC/FreeSync (se aplica al reiniciar)"
+  "Prevent G-SYNC/FreeSync flicker (applies at next launch)": "Evitar el parpadeo de G-SYNC/FreeSync (se aplica al reiniciar)",
+  "Keywords and presets apply to new files only, not to photos already in Local": "Las palabras clave y los ajustes preestablecidos solo se aplican a archivos nuevos, no a fotos que ya están en Local"
 }
