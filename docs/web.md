@@ -164,7 +164,7 @@ are the same in every version, so serve them with `Cache-Control: no-cache` (not
   typo can't run a command on the selection. This is how the headless-Chrome checks drive the page.
   `await lightcraft.request("ui.inspect", {})` calls any method of the control channel
   (`docs/control-protocol.md`: `engine.execute`, `ui.inspect`, `ui.menu.invoke`, …) and resolves to
-  its result as an object, as VectorCraft's `window.vectorcraft` and PhotoCraft's
+  its result as a JSON value (an object, an array, `null`, …), as VectorCraft's `window.vectorcraft` and PhotoCraft's
   `window.photocraft` do, so an agent or a host app drives the page with the commands it sends the
   desktop app. Errors reject with an `Error`.
 - **The page title names the open photo**: `<file name> — LightCraft`, with ` •` after the name while
