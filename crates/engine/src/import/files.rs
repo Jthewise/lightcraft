@@ -86,7 +86,7 @@ pub(crate) fn expand_noting(
 /// [`expand_noting`], taking the paths `known_file` says are files as files without asking the
 /// disk (a review hands over thousands of them, and telling a file from a folder is a round trip
 /// each on a network share).
-fn expand_knowing(
+pub(super) fn expand_knowing(
     paths: &[String],
     skip: Option<&Path>,
     limits: crate::walk::Limits,
