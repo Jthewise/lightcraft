@@ -2596,5 +2596,15 @@
   "Top bar": "Верхняя панель",
   "Tool strip": "Панель инструментов",
   "Bottom bar": "Нижняя панель",
-  "Prevent G-SYNC/FreeSync flicker (applies at next launch)": "Предотвращать мерцание G-SYNC/FreeSync (после перезапуска)"
+  "Prevent G-SYNC/FreeSync flicker (applies at next launch)": "Предотвращать мерцание G-SYNC/FreeSync (после перезапуска)",
+  "A folder can't go inside itself": "Папку нельзя поместить в саму себя",
+  "A keyword can't go inside itself": "Ключевое слово нельзя поместить в само себя",
+  "Copied as text: paste it in a keyword box to give the keywords to photos": "Скопировано как текст: вставьте в поле ключевых слов, чтобы назначить их фото",
+  "Copied: Paste is in a folder's menu, and in the Albums + menu for the top level": "Скопировано: «Вставить» находится в меню папки, а для верхнего уровня — в меню «+» раздела «Альбомы»",
+  "Cut: Paste is in a folder's menu, and in the Albums + menu for the top level": "Вырезано: «Вставить» находится в меню папки, а для верхнего уровня — в меню «+» раздела «Альбомы»",
+  "Cut: Paste is in the menu of the keyword they go inside": "Вырезано: «Вставить» находится в меню ключевого слова, внутрь которого их нужно поместить",
+  "Duplicate Album": "Дублировать альбом",
+  "Paste Inside This Keyword": "Вставить в это ключевое слово",
+  "Paste Into This Folder": "Вставить в эту папку",
+  "Paste at Top Level": "Вставить на верхний уровень"
 }
