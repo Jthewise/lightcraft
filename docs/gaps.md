@@ -90,6 +90,7 @@ Beta-blocking gaps (B) total **~230–430 h**; with the stability and platform w
 
 | Date | Change | Summary |
 |---|---|---|
+| 2026-11-02 | patch | Gap 11: a linear-RGB denoise tile matches each colour plane's scale on its own, so dark, strongly coloured X-Trans night shots keep their colour (red was 7–9 8-bit levels down, green 3 up); a download of the linear RawNIND model installs that model instead of the Bayer one; the product cache version moves to 4; hours unchanged |
 | 2026-11-02 | minor | Gap 11: AI Denoise supports Fujifilm X-Trans sensors via the post-demosaic LinearRgb contract (`Domain::LinearRgb`) |
 | 2026-10-29 | minor | Import thumbnails render when the camera JPEG is too small, retaining preview-only/error fallbacks; import review: remembered thumbnail size and density-aware previews (#2237, part of #2056); pre-import loupe/keyboard culling remains open; no ranked gap closes |
 | 2026-10-24 | minor | Gap 8: lens profile work is tracked in #329; hours unchanged |
