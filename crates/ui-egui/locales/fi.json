@@ -2356,5 +2356,8 @@
   "Set up name suggestions…": "Määritä nimiehdotukset…",
   "Top bar": "Yläpalkki",
   "Tool strip": "Työkalupalkki",
-  "Bottom bar": "Alapalkki"
+  "Bottom bar": "Alapalkki",
+  "Drag to move, or use the arrow keys": "Siirrä vetämällä tai käytä nuolinäppäimiä",
+  "A group can't go inside itself": "Ryhmää ei voi siirtää itsensä sisään",
+  "Groups can't nest any deeper": "Ryhmiä ei voi sisentää syvemmälle"
 }

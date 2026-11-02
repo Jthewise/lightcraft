@@ -317,5 +317,7 @@
   "Panel layout could not be restored: {error}": "La disposition des panneaux n'a pas pu être restaurée : {error}",
   "Panel move was not applied: {error}": "Le déplacement du panneau n'a pas été appliqué : {error}",
   "{name} is installed": "{name} est installé",
-  "{name} is installed and in use: face recognition is on": "{name} est installé et utilisé : la reconnaissance des visages est activée"
+  "{name} is installed and in use: face recognition is on": "{name} est installé et utilisé : la reconnaissance des visages est activée",
+  "Rule {n} of {m}: {what}. Move with the arrow keys": "Règle {n} sur {m} : {what}. Déplacer avec les flèches",
+  "Group {n} of {m}: match {mode}, {count} inside. Move with the arrow keys": "Groupe {n} sur {m} : correspondre à {mode}, {count} à l’intérieur. Déplacer avec les flèches"
 }

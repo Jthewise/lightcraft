@@ -2438,5 +2438,8 @@
   "Set up name suggestions…": "Nastavit návrhy jmen…",
   "Top bar": "Horní lišta",
   "Tool strip": "Pruh nástrojů",
-  "Bottom bar": "Dolní lišta"
+  "Bottom bar": "Dolní lišta",
+  "Drag to move, or use the arrow keys": "Přetažením přesunete, nebo použijte šipky",
+  "A group can't go inside itself": "Skupinu nelze vložit do sebe samé",
+  "Groups can't nest any deeper": "Skupiny nelze vnořovat hlouběji"
 }

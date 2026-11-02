@@ -2234,5 +2234,8 @@
   "Top bar": "Barra superior",
   "Tool strip": "Barra de ferramentas",
   "Bottom bar": "Barra inferior",
-  "Prevent G-SYNC/FreeSync flicker (applies at next launch)": "Evitar cintilação de G-SYNC/FreeSync (no próximo início)"
+  "Prevent G-SYNC/FreeSync flicker (applies at next launch)": "Evitar cintilação de G-SYNC/FreeSync (no próximo início)",
+  "Drag to move, or use the arrow keys": "Arraste para mover ou use as setas",
+  "A group can't go inside itself": "Um grupo não pode ficar dentro de si mesmo",
+  "Groups can't nest any deeper": "Os grupos não podem ser aninhados mais fundo"
 }

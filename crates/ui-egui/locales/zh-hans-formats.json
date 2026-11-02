@@ -317,5 +317,7 @@
   "Panel layout could not be restored: {error}": "无法恢复面板布局：{error}",
   "Panel move was not applied: {error}": "面板移动未应用：{error}",
   "{name} is installed": "{name} 已安装",
-  "{name} is installed and in use: face recognition is on": "{name} 已安装并在使用：人脸识别已开启"
+  "{name} is installed and in use: face recognition is on": "{name} 已安装并在使用：人脸识别已开启",
+  "Rule {n} of {m}: {what}. Move with the arrow keys": "规则 {n}/{m}：{what}。用方向键移动",
+  "Group {n} of {m}: match {mode}, {count} inside. Move with the arrow keys": "组 {n}/{m}：匹配{mode}，内含 {count} 项。用方向键移动"
 }

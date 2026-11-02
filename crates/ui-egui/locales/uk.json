@@ -2386,5 +2386,8 @@
   "Top bar": "Верхня панель",
   "Tool strip": "Панель інструментів",
   "Bottom bar": "Нижня панель",
-  "Prevent G-SYNC/FreeSync flicker (applies at next launch)": "Запобігати мерехтінню G-SYNC/FreeSync (після перезапуску)"
+  "Prevent G-SYNC/FreeSync flicker (applies at next launch)": "Запобігати мерехтінню G-SYNC/FreeSync (після перезапуску)",
+  "Drag to move, or use the arrow keys": "Перетягніть, щоб перемістити, або скористайтеся стрілками",
+  "A group can't go inside itself": "Групу не можна помістити саму в себе",
+  "Groups can't nest any deeper": "Групи не можна вкладати глибше"
 }
