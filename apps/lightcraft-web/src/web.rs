@@ -512,6 +512,9 @@ impl WebApp {
         let (control_tx, control_rx) = std::sync::mpsc::channel();
         CONTROL.with(|c| *c.borrow_mut() = Some(control_tx));
         app = app.with_control(control_rx);
+        // `with_control` keeps CPU copies of photo textures for the desktop's headless screenshots;
+        // in a browser they would only cost memory (every thumbnail), so the page keeps none.
+        app.renderer.keep_pixels = false;
         let ui_written = files.get("ui.json").unwrap_or_default();
         // an arrangement from an older docking version starts again from the default
         let mut saved = serde_json::from_slice::<serde_json::Value>(&ui_written).unwrap_or_default();
