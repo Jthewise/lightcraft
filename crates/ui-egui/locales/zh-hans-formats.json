@@ -317,5 +317,6 @@
   "Panel layout could not be restored: {error}": "无法恢复面板布局：{error}",
   "Panel move was not applied: {error}": "面板移动未应用：{error}",
   "{name} is installed": "{name} 已安装",
-  "{name} is installed and in use: face recognition is on": "{name} 已安装并在使用：人脸识别已开启"
+  "{name} is installed and in use: face recognition is on": "{name} 已安装并在使用：人脸识别已开启",
+  "It leads back to itself through “{}”: change the rules of one album on the loop (Edit Smart Album…)": "它通过相册“{0}”回到自身：请更改循环中某个相册的规则（编辑智能相册…）"
 }

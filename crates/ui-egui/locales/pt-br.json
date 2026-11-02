@@ -2234,5 +2234,7 @@
   "Top bar": "Barra superior",
   "Tool strip": "Barra de ferramentas",
   "Bottom bar": "Barra inferior",
-  "Prevent G-SYNC/FreeSync flicker (applies at next launch)": "Evitar cintilação de G-SYNC/FreeSync (no próximo início)"
+  "Prevent G-SYNC/FreeSync flicker (applies at next launch)": "Evitar cintilação de G-SYNC/FreeSync (no próximo início)",
+  "This album is in a loop, so it shows nothing": "Este álbum está em um ciclo, então não mostra nada",
+  "It tests itself: change its rules (Edit Smart Album…)": "Ele testa a si mesmo: mude as regras dele (Editar álbum inteligente…)"
 }

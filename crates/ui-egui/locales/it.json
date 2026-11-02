@@ -2556,5 +2556,7 @@
   "Unit": "Unità",
   "Top bar": "Barra superiore",
   "Tool strip": "Barra degli strumenti",
-  "Bottom bar": "Barra inferiore"
+  "Bottom bar": "Barra inferiore",
+  "This album is in a loop, so it shows nothing": "Questo album è in un ciclo, quindi non mostra nulla",
+  "It tests itself: change its rules (Edit Smart Album…)": "Verifica se stesso: modifica le sue regole (Modifica album smart…)"
 }
