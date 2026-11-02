@@ -317,5 +317,22 @@
   "Panel layout could not be restored: {error}": "Paneelien asettelua ei voitu palauttaa: {error}",
   "Panel move was not applied: {error}": "Paneelin siirtoa ei otettu käyttöön: {error}",
   "{name} is installed": "{name} on asennettu",
-  "{name} is installed and in use: face recognition is on": "{name} on asennettu ja käytössä: kasvojentunnistus on päällä"
+  "{name} is installed and in use: face recognition is on": "{name} on asennettu ja käytössä: kasvojentunnistus on päällä",
+  "{n} albums": "{n} albumia",
+  "{n} folders": "{n} kansiota",
+  "Export {n} Albums…": "Vie {n} albumia…",
+  "Move {n} Albums to": "Siirrä {n} albumia kohteeseen",
+  "Delete {n} Albums…": "Poista {n} albumia…",
+  "Remove {n} Folders from Library…": "Poista {n} kansiota kirjastosta…",
+  "Add {n} Keywords to Selected Photos": "Lisää {n} avainsanaa valittuihin kuviin",
+  "Remove {n} Keywords from Selected Photos": "Poista {n} avainsanaa valituista kuvista",
+  "Show Photos with Any of {n} Keywords": "Näytä kuvat, joilla on jokin {n} avainsanasta",
+  "Merge {n} Keywords into…": "Yhdistä {n} avainsanaa kohteeseen…",
+  "Delete {n} Keywords…": "Poista {n} avainsanaa…",
+  "Delete {n} albums?": "Poistetaanko {n} albumia?",
+  "Delete {n} keywords?": "Poistetaanko {n} avainsanaa?",
+  "Photos that have one of them: {count}. The keywords below them go too. Undo brings them back.": "Kuvia, joilla on jokin niistä: {count}. Niiden alla olevat avainsanat poistetaan myös. Kumoa palauttaa ne.",
+  "Remove {n} folders from the library? Photos imported from them: {count}.": "Poistetaanko {n} kansiota kirjastosta? Niistä tuotuja kuvia: {count}.",
+  "…and {n} more": "…ja {n} muuta",
+  "{n} keywords": "{n} avainsanaa"
 }

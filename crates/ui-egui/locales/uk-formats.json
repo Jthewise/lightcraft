@@ -317,5 +317,22 @@
   "Panel layout could not be restored: {error}": "Не вдалося відновити розташування панелей: {error}",
   "Panel move was not applied: {error}": "Переміщення панелі не застосовано: {error}",
   "{name} is installed": "{name} установлено",
-  "{name} is installed and in use: face recognition is on": "{name} установлено й використовується: розпізнавання облич увімкнено"
+  "{name} is installed and in use: face recognition is on": "{name} установлено й використовується: розпізнавання облич увімкнено",
+  "{n} albums": "Альбоми: {n}",
+  "{n} folders": "Теки: {n}",
+  "Export {n} Albums…": "Експортувати альбоми ({n})…",
+  "Move {n} Albums to": "Перемістити альбоми ({n}) до",
+  "Delete {n} Albums…": "Видалити альбоми ({n})…",
+  "Remove {n} Folders from Library…": "Вилучити теки ({n}) з бібліотеки…",
+  "Add {n} Keywords to Selected Photos": "Додати ключові слова ({n}) до вибраних фото",
+  "Remove {n} Keywords from Selected Photos": "Вилучити ключові слова ({n}) з вибраних фото",
+  "Show Photos with Any of {n} Keywords": "Показати фото з будь-яким із ключових слів ({n})",
+  "Merge {n} Keywords into…": "Об’єднати ключові слова ({n}) з…",
+  "Delete {n} Keywords…": "Видалити ключові слова ({n})…",
+  "Delete {n} albums?": "Видалити альбоми ({n})?",
+  "Delete {n} keywords?": "Видалити ключові слова ({n})?",
+  "Photos that have one of them: {count}. The keywords below them go too. Undo brings them back.": "Фото з одним із них: {count}. Вкладені ключові слова теж видаляються. Скасування поверне їх.",
+  "Remove {n} folders from the library? Photos imported from them: {count}.": "Вилучити теки ({n}) з бібліотеки? Імпортованих із них фото: {count}.",
+  "…and {n} more": "…і ще {n}",
+  "{n} keywords": "Ключові слова: {n}"
 }
