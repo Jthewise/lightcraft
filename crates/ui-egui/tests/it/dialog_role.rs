@@ -7,7 +7,9 @@ use lightcraft_ui_egui::{LightcraftApp, Services};
 
 fn harness() -> Harness<'static, LightcraftApp> {
     let app = LightcraftApp::new(lightcraft_engine::Session::with_demo(), Services { png: None, ..Default::default() });
-    let mut h = Harness::builder().with_size(vec2(1500.0, 950.0)).build_ui_state(
+    // These tests inspect dialog semantics, not whether the optional font set covers every
+    // localized string (the dedicated localization tests verify glyph coverage).
+    let mut h = Harness::builder().with_size(vec2(1500.0, 950.0)).allow_missing_glyphs().build_ui_state(
         |ui, app: &mut LightcraftApp| {
             app.logic(&ui.ctx().clone());
             app.ui(ui);
