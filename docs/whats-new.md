@@ -1,5 +1,10 @@
 # What's new in LightCraft
 
+## 2026-11-03
+
+### Survey filmstrip sizing
+- Survey now has an accessible bottom-bar size slider for its filmstrip. The preference is independent of the Grid thumbnail size, defaults to the existing 142-point appearance, and scales cell widths and thumbnail requests with the allocated height and display density. Short windows keep at least 120 points for the canvas when possible; the strip hides when less than 72 points can be allocated.
+
 ## 2026-10-30
 
 ### Lens distortion correction for the Sony A7 III
