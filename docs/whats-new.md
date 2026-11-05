@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+### Delete Control Point on the point curve
+- Right-clicking a point on a point curve now offers Delete Control Point, as in Lightroom Classic's Tone Curve
+  panel; before, the menu only had the two resets and a point could be removed only by double-clicking it. It works on
+  the RGB, red, green and blue curves, takes the point out as one undo step, and is not offered over empty graph or the
+  two end points.
+
 ### Remove Hot Pixels
 - Detail ▸ Noise Reduction has a new box, Remove Hot Pixels (raws only), on for newly imported raws (issue #1345).
   At high ISO single photosites read far brighter than all their neighbours and turn into small red, green or blue
