@@ -2,6 +2,12 @@
 
 ## Unreleased
 
+### The targeted-adjustment button is a plain ring with a dot
+- The Tone Curve's targeted-adjustment button (and the label before the Color Mixer's Hue / Saturation / Luminance
+  tabs) drew a ring with a pair of arrows jammed against it, which looked like one blob and sat off-centre in its
+  button. It is now a ring with a dot, centred, as the tool looks in Lightroom Classic. The tooltip and the message
+  shown when the tool is on still say to drag up or down on the photo.
+
 ### Remove Hot Pixels
 - Detail ▸ Noise Reduction has a new box, Remove Hot Pixels (raws only), on for newly imported raws (issue #1345).
   At high ISO single photosites read far brighter than all their neighbours and turn into small red, green or blue
