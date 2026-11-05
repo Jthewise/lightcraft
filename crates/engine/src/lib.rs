@@ -412,6 +412,14 @@ pub struct Session {
     pub cache_mb: u32,
     /// The once-per-session alert for a drive running low under the preview cache ([`disk_space`]).
     pub(crate) disk_alert: disk_space::DiskAlertState,
+    /// The face chosen to show each person by in the People view (lower-cased name → face), instead of their largest
+    /// one (`faces.setCover`; persisted in people.json, outside the catalog).
+    pub person_covers: std::collections::BTreeMap<String, lightcraft_catalog::PersonCover>,
+    /// The faces set aside as "not this person" on each person's page (lower-cased name → faces): never suggested for
+    /// them again (`faces.dismiss`; persisted in people.json beside [`Session::person_covers`]).
+    pub person_dismissed: std::collections::BTreeMap<String, Vec<lightcraft_catalog::FaceRef>>,
+    /// Bumped whenever [`Session::person_covers`] changes, which the catalog revision doesn't say.
+    pub people_gen: u64,
     /// Slideshow playback settings (`slideshow.playback`; persisted in prefs.json).
     pub slideshow: slideshow::PlaybackSettings,
     /// Slideshow slide layout: Layout, Options and Backdrop (`slideshow.layout`; persisted in
@@ -553,6 +561,9 @@ impl Session {
             import_defaults: import::ImportDefaults::default(),
             cache_mb: 0,
             disk_alert: Default::default(),
+            person_covers: Default::default(),
+            person_dismissed: Default::default(),
+            people_gen: 0,
             slideshow: slideshow::PlaybackSettings::default(),
             slide_layout: slide::SlideSettings::default(),
             slide_overlays: slide_overlay::OverlaySettings::default(),
