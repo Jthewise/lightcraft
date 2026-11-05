@@ -12,6 +12,12 @@
   hot pixels on a sensor. Stars and other points of light that are kept don't count, so a dense star field still
   loses its hot pixels. Settings ▸ Performance ▸ Hot pixel limit sets the share (0.05 % to 1 %).
 
+### English times on a 24-hour clock
+- With the interface in English, times were always on a 12-hour clock (`10:11:11 PM`). Setting
+  `settings.use24HourClock` to `true` in `ui.json` now shows the Captured field, the grid's date caption and the
+  Versions list on a 24-hour clock (`22:11:11`). It is off unless set; the other languages already showed 24-hour
+  times, and the photos' times themselves are unchanged (part of issue #3479).
+
 ## 2026-11-02
 
 ### The Windows title bar is readable from the moment the window opens
