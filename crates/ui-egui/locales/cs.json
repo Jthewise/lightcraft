@@ -2445,5 +2445,6 @@
   "Set up name suggestions…": "Nastavit návrhy jmen…",
   "Top bar": "Horní lišta",
   "Tool strip": "Pruh nástrojů",
-  "Bottom bar": "Dolní lišta"
+  "Bottom bar": "Dolní lišta",
+  "Keywords and presets apply to new files only, not to photos already in Local": "Klíčová slova a předvolby se použijí jen u nových souborů, ne u fotografií, které už jsou v Místních souborech"
 }
