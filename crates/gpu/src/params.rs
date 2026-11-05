@@ -94,6 +94,11 @@ const FIELDS: &[(&str, usize)] = &[
     ("PROOF_DISP_WARN", 1),
     // first row of a band dispatch (the kernel runs over rows Y0.., see `render`)
     ("Y0", 1),
+    // Requested output rectangle within the work image.
+    ("KEEP_X", 1),
+    ("KEEP_Y", 1),
+    ("KEEP_W", 1),
+    ("KEEP_H", 1),
     // process V4's calibrated Contrast, Blacks (`FinishParams::light`): the number of active
     // operators (0 = none), each one's mode (`light_v3::Mode::code`) and mix weight, and the offset
     // of their tables in `aux` (LIGHT_N entries each, in order)
@@ -168,7 +173,12 @@ pub struct Present {
 
 /// The `finish` kernel's parameter block and auxiliary table (tone LUT | chroma curve | sRGB LUT | curve LUTs |
 /// mask terms | light operator tables) for `fp` with `masks` (their local adjustments' terms).
-pub fn finish_block(fp: &FinishParams, masks: &[[f32; MASK_TERMS]], present: &Present) -> (Vec<u32>, Vec<f32>) {
+pub fn finish_block(
+    fp: &FinishParams,
+    masks: &[[f32; MASK_TERMS]],
+    present: &Present,
+    output: lightcraft_pipeline::PixelWindow,
+) -> (Vec<u32>, Vec<f32>) {
     let mut aux: Vec<f32> = fp.tone.lut().to_vec();
     aux.extend_from_slice(fp.tone.chroma_lut());
     let srgb_off = aux.len();
@@ -208,6 +218,10 @@ pub fn finish_block(fp: &FinishParams, masks: &[[f32; MASK_TERMS]], present: &Pr
     p.fs("LIGHT_W", &light.iter().map(|op| op.weight).collect::<Vec<f32>>());
     p.u("W", fp.w as u32);
     p.u("H", fp.h as u32);
+    p.u("KEEP_X", output.x as u32);
+    p.u("KEEP_Y", output.y as u32);
+    p.u("KEEP_W", output.w as u32);
+    p.u("KEEP_H", output.h as u32);
     p.u("NMASK", masks.len() as u32);
     p.u("MASK_OFF", mask_off as u32);
     p.u("SRGB_OFF", srgb_off as u32);
