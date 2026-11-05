@@ -61,6 +61,8 @@ Beta-blocking gaps (B) total **~230–430 h**; with the stability and platform w
 
 ## Closed recently (kept for calibration)
 
+- 2026-11-04: persistent ignore/restore for individual and selected faces (#1873), with catalog-only Undo/Redo and paginated review without a recognition model. People remains partial: separated unnamed clusters and per-person rejection are not included; no ranked gap or headline count closes.
+
 - 2026-10-29: the import review has a remembered 80–320 pt thumbnail-size slider, density-aware previews and bounded visible retention (#2237, part of #2056). Small sources do not reconstruct the same preview job every frame. The pre-import loupe and keyboard culling remain open in #2056; no ranked gap or headline feature count closes.
 
 - 2026-10-22: saving XMP preserves foreign namespaces even when they use `lc:` or `xmp:` prefixes; importing them no longer interprets their properties as native settings or ratings. Parser, merge and save-command regressions cover the correction; no ranked gap or readiness estimate changes.
@@ -91,6 +93,7 @@ Beta-blocking gaps (B) total **~230–430 h**; with the stability and platform w
 | Date | Change | Summary |
 |---|---|---|
 | 2026-11-05 | minor | Gap 3: process V5 rolls a raw's tone curve off into white in stops, so raising Exposure keeps the highlights the sensor recorded (#1632); the gap stays open (no Lightroom comparison) and hours are unchanged |
+| 2026-11-04 | minor | LRC-LIB-PEOPLE: persistent multi-select ignore/restore, format-12 upgrade and model-independent review; People remains partial and ranked gaps/counts are unchanged |
 | 2026-10-27 | minor | Gap 26: the loupe shows built previews (they were rendered again), photos ahead and the whole view are prepared in the background with settings per mode; gap not closed |
 | 2026-10-27 | minor | Gap 26: culling speed measured and improved (progressive Local browse, camera previews made ahead, a CR3's smallest covering JPEG, camera JPEG first at 100 %); what is left listed; gap not closed |
 | 2026-11-02 | minor | PERF-STEP-STALL: the catalog log is written and synced off the UI thread, so stepping and flagging never wait for the drive (a 300 ms sync: slowest flag 0.2 ms, was 305 ms); a failed write is held and retried, counted as unsaved, never dropped; gap 26 not closed |
