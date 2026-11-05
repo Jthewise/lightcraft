@@ -3724,6 +3724,7 @@ dependencies = [
  "lightcraft-scenes",
  "lightcraft-segment",
  "lightcraft-slideshow",
+ "lightcraft-sysmem",
  "lightcraft-testkit",
  "lightcraft-tiff",
  "log",
@@ -3970,6 +3971,9 @@ dependencies = [
 [[package]]
 name = "lightcraft-sysmem"
 version = "0.18.0"
+dependencies = [
+ "windows-sys 0.61.2",
+]
 
 [[package]]
 name = "lightcraft-testkit"
@@ -7853,6 +7857,7 @@ version = "0.18.0"
 dependencies = [
  "brotli",
  "flate2",
+ "lightcraft-sysmem",
  "serde_json",
  "sha2",
 ]
