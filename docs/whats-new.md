@@ -2,6 +2,13 @@
 
 ## Unreleased
 
+### The point curve bends like Lightroom Classic's
+- The curve through the Point Curve's points is now a smooth cubic spline, as in Lightroom Classic, and is cut off
+  flat at black and white. With a few points it swings past them (a bump between two points, a dip after a steep
+  rise), where before it stayed between its neighbours. A point curve read from a Lightroom sidecar or preset
+  (`ToneCurvePV2012`) now renders as it does there. A curve of two points, or of points on a straight line, is
+  unchanged; saved edits keep their points, but a curve with three or more points can look different.
+
 ### Remove Hot Pixels
 - Detail ▸ Noise Reduction has a new box, Remove Hot Pixels (raws only), on for newly imported raws (issue #1345).
   At high ISO single photosites read far brighter than all their neighbours and turn into small red, green or blue
