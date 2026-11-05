@@ -298,9 +298,9 @@
   "…and {more} more": "…och {more} till",
   "Already in “{}”": "Already in “{}”",
   "Color space: Rec. 2020 {curve} (HDR AVIF)": "Color space: Rec. 2020 {curve} (HDR AVIF)",
-  "Move {n} photo{} to “{}”": "Move {n} photo{} to “{}”",
-  "Move {n} photo{} to “{}”?": "Move {n} photo{} to “{}”?",
-  "Moved {n} photo{} to “{}”. Edit → Undo moves them back.": "Moved {n} photo{} to “{}”. Edit → Undo moves them back.",
+  "Move {n} file{} to “{}”": "Move {n} file{} to “{}”",
+  "Move {n} file{} to “{}”?": "Move {n} file{} to “{}”?",
+  "Moved {n} file{} to “{}”. Edit → Undo moves them back.": "Moved {n} file{} to “{}”. Edit → Undo moves them back.",
   "{n} selected photos · {pages} pages": "{n} selected photos · {pages} pages",
   "{in_trash} catalog photos are in this library's Recently Deleted and stay there; restore them from Recently Deleted to see them.": "{in_trash} katalogfoton finns i Nyligen raderade i det här biblioteket och ligger kvar där; återställ dem från Nyligen raderade för att se dem.",
   "{skipped} catalog images were not imported because their records in the catalog are incomplete.": "{skipped} catalog images were not imported because their records in the catalog are incomplete.",
@@ -320,5 +320,8 @@
   "{name} is installed and in use: face recognition is on": "{name} är installerad och används: ansiktsigenkänning är på",
   "Creates {stacks} stack{} from {photos} of {scope}": "Skapar staplar: {stacks} · foton: {photos} av {scope}{:.0}",
   "{n} selected photo{} · {pages} page{}": "Markerade foton: {n} · sidor: {pages}{:.0}{:.0}",
-  "{n} photo{} in view · {slides} slide{} · {time}": "Foton i vyn: {n} · bilder: {slides} · {time}{:.0}{:.0}"
+  "{n} photo{} in view · {slides} slide{} · {time}": "Foton i vyn: {n} · bilder: {slides} · {time}{:.0}{:.0}",
+  "Add {n} photo{} to “{}”": "Lägg till foton i ”{1}”: {n}{0:.0}",
+  "Add “{keyword}” to {n} photo{}": "Lägg till ”{keyword}” på foton: {n}{:.0}",
+  "{n} already there": "redan i albumet: {n}"
 }

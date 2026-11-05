@@ -44,10 +44,10 @@
   "LightCraft could not open its window: {e}\n\nThe log file has the details: {path}": "LightCraftのウィンドウを開けませんでした: {e}\n\n詳しくはログファイルをご覧ください: {path}",
   "Matches: {}": "一致条件：{}",
   "Merging… {stage} {:.0}%": "合成中… {stage} {:.0}%",
-  "Move {n} photo{} to “{}”": "{n}枚を「{1}」に移動{0:.0}",
-  "Move {n} photo{} to “{}”?": "{n}枚を「{1}」に移動しますか？{0:.0}",
+  "Move {n} file{} to “{}”": "{n}件のファイルを「{1}」に移動{0:.0}",
+  "Move {n} file{} to “{}”?": "{n}件のファイルを「{1}」に移動しますか？{0:.0}",
   "Move {what} to Recently Deleted?": "{what}を「最近削除した写真」に移動しますか？",
-  "Moved {n} photo{} to “{}”. Edit → Undo moves them back.": "{n}枚を「{1}」に移動しました。編集 → 取り消す で元に戻せます。{0:.0}",
+  "Moved {n} file{} to “{}”. Edit → Undo moves them back.": "{n}件のファイルを「{1}」に移動しました。編集 → 取り消す で元に戻せます。{0:.0}",
   "Named ({named_n})": "名前付き（{named_n}）",
   "Paste into {n} photo{} — only settings that were copied are pasted": "{n}枚に貼り付け{:.0}（コピーされた設定だけを適用）",
   "Preset: {name}": "プリセット：{name}",
@@ -320,5 +320,8 @@
   "Panel layout could not be restored: {error}": "パネル配置を復元できませんでした：{error}",
   "Panel move was not applied: {error}": "パネルの移動は適用されませんでした：{error}",
   "{name} is installed": "{name} をインストールしました",
-  "{name} is installed and in use: face recognition is on": "{name} をインストールして使用中です：顔認識はオンです"
+  "{name} is installed and in use: face recognition is on": "{name} をインストールして使用中です：顔認識はオンです",
+  "Add {n} photo{} to “{}”": "{n}枚を「{1}」に追加{0:.0}",
+  "{n} already there": "{n}枚は追加済み",
+  "Add “{keyword}” to {n} photo{}": "写真{n}枚に「{keyword}」を追加{:.0}"
 }
