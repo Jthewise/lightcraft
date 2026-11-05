@@ -77,6 +77,7 @@ mod quit_unsaved;
 mod rating;
 mod recheck;
 mod rename_person;
+mod report_bug;
 mod rules_editor;
 mod sam_setup;
 mod scroll;

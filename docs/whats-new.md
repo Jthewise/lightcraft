@@ -2,6 +2,12 @@
 
 ## 2026-10-30
 
+### Report a Bug
+- Help ▸ Report a Bug… (issue #1015), next to Send Feedback…: describe what happened and LightCraft saves a report
+  file with the system info and the logs, shows it in Finder or Explorer, and opens a new GitHub issue already filled
+  in, for you to check, attach the file to and submit. Your home folder and photo file names are hidden unless you
+  untick the box, and the dialog shows exactly what goes in. Nothing is sent by the app.
+
 ### Lens distortion correction for the Sony A7 III
 - Raws from the Sony A7 III (ILCE-7M3) now get the camera's own distortion correction, read from the file, like
   the A7R IVA's: straight lines stay straight at wide angles (the FE 16–35 F4 ZA at 16 mm shifts detail near the
