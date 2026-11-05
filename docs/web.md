@@ -162,6 +162,34 @@ are the same in every version, so serve them with `Cache-Control: no-cache` (not
   (no params: a command that takes photo ids then acts on the selection). Any other text that
   isn't an object rejects the promise and runs nothing, as the control channel and MCP do, so a
   typo can't run a command on the selection. This is how the headless-Chrome checks drive the page.
+  `await lightcraft.request("ui.inspect", {})` calls any method of the control channel
+  (`docs/control-protocol.md`: `engine.execute`, `ui.inspect`, `ui.menu.invoke`, …) and resolves to
+  its result as a JSON value (an object, an array, `null`, …), as VectorCraft's `window.vectorcraft` and PhotoCraft's
+  `window.photocraft` do, so an agent or a host app drives the page with the commands it sends the
+  desktop app. Errors reject with an `Error`, and params that are neither an object nor JSON text
+  (a number, `NaN`, a function) reject without running anything.
+  - **Who can call it**: scripts that run in the page itself (its own scripts, anything it
+    includes, the browser console), and a page on the same origin that holds this page's `window`
+    (a parent that frames it, or the page that opened it). These are the scripts that can already
+    call `lightcraft.command` and read the library in the page's browser storage, so a same-origin
+    host that frames or opens LightCraft is trusted with it; to keep a host out, serve LightCraft
+    from another origin. Another origin can't reach this page's `window`, and the page adds no
+    `message` listener for it. There is no token: the desktop server
+    needs one because any local process can open its TCP port, but here there is nothing outside the
+    page to keep out, and a token kept in the page would be readable by the scripts it was meant to
+    stop. A page that runs scripts it doesn't trust shouldn't host LightCraft.
+  - **What it reaches**: every method `crates/ui-egui/src/control.rs` (`handle`) answers, as on the
+    desktop: `engine.execute` / `ui.menu.invoke`, `engine.commands`, `ui.menu.list`, `ui.menu.tree`,
+    `ui.inspect`, `ui.widgets`, `ui.set`, `ui.dialog.confirm`, `ui.dialog.cancel`, `ui.resize`,
+    `ui.zoomFactor`, `ui.screenshot`, `ui.render`, `ui.dropFiles`, the input methods (`ui.click`,
+    `ui.drag`, `ui.pointer`, `ui.key`, `ui.text`, `ui.clipboard`, `ui.scroll`, `ui.zoom`, …) and
+    `app.quit`.
+  - **Files stay in the browser**: a write to a path (`ui.render` with `path`, an export) becomes a
+    browser download named after the path's last part, and `ui.screenshot` can't write to a path at
+    all. `ui.screenshot {"headless": true}` can't show the photos on the web, because the page
+    keeps no CPU copies of them (`keep_pixels`); a plain `ui.screenshot` captures the canvas. `ui.dropFiles` paths can't be read, because the page has no file system. Nothing reaches
+    the device's files except as browser downloads and the files the person picks. `app.quit`
+    does nothing, since the web runner can't close the tab.
 - **The page title names the open photo**: `<file name> — LightCraft`, with ` •` after the name while
   changes are not yet written to browser storage (`LightcraftApp::page_title`). eframe's web runner
   ignores the window title the desktop app sets, and a host that embeds the page reads this title to
@@ -181,7 +209,7 @@ are the same in every version, so serve them with `Cache-Control: no-cache` (not
   storage until the site's data is cleared; backups larger than 4 GB need zip64, which isn't
   written yet.
 - **Preset files** (import/export `.json`) aren't wired to browser pickers yet.
-- **Control channel / MCP.** These are desktop-only, because they need a TCP socket.
+- **Control channel over TCP / MCP.** These are desktop-only, because they need a TCP socket. In the browser, `lightcraft.request` (above) reaches the same control methods without one.
 - **AVIF export** is untested in the browser; it's the one encoder that may not be wasm-safe.
 - **JPEG XL export** is native only: the encoder (`jixel`) starts threads of its own, which wasm32 has not got; the
   web build reports "not available in this build". JPEG XL import works.
