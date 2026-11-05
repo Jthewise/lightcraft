@@ -17,12 +17,20 @@
 //! lost. Cutting the log back, replacing it and reading it act on that logical content, after
 //! everything handed over before; the caller waits for them. Dropping the writer waits for
 //! everything handed over and tries a last time.
+//!
+//! **Every write asks the [`OpenedFolder`] first**, on this thread (a `stat` never makes the caller
+//! wait for the drive): when the log's path no longer leads to the folder the store opened (a share
+//! mounted over it, issue #3240) nothing is written, not even through the file that is already
+//! open. The bytes are held like those of any other write that failed, and written once the folder
+//! that was opened is back at the path.
 
 use std::io::{self, Seek, Write};
 use std::path::PathBuf;
 use std::sync::mpsc::{Receiver, RecvTimeoutError, Sender, channel};
 use std::sync::{Arc, Mutex, PoisonError};
 use std::time::Duration;
+
+use crate::opened_folder::OpenedFolder;
 
 /// How long a caller waits for the thread at most (a cut, a replace, a read, a flush).
 const WAIT: Duration = Duration::from_secs(60);
@@ -63,12 +71,12 @@ fn not_written(why: &str) -> io::Error {
 }
 
 impl LogWriter {
-    /// A writer for `dir/name` (`None` when no thread can start: the store then writes itself).
-    pub(crate) fn start(dir: PathBuf, name: &str) -> Option<LogWriter> {
+    /// A writer for `name` in the folder (`None` when no thread can start: the store then writes itself).
+    pub(crate) fn start(folder: OpenedFolder, name: &str) -> Option<LogWriter> {
         let (tx, rx) = channel::<Msg>();
         let shared = Arc::new(Mutex::new(Shared::default()));
         let sh = shared.clone();
-        let mut w = Writer::new(dir, name);
+        let mut w = Writer::new(folder, name);
         let thread = std::thread::Builder::new().name("catalog-log".into()).spawn(move || w.run(&rx, &sh)).ok()?;
         Some(LogWriter { name: name.to_string(), tx: Some(tx), shared, thread: Some(thread) })
     }
@@ -138,6 +146,8 @@ struct Writer {
     dir: PathBuf,
     path: PathBuf,
     tmp: PathBuf,
+    /// The folder the store opened: asked before anything is written.
+    folder: OpenedFolder,
     file: Option<std::fs::File>,
     /// Bytes of the file written whole and synced (`None` until the file was first opened).
     good: Option<u64>,
@@ -151,10 +161,11 @@ fn lines(b: &[u8]) -> usize {
 }
 
 impl Writer {
-    fn new(dir: PathBuf, name: &str) -> Writer {
+    fn new(folder: OpenedFolder, name: &str) -> Writer {
+        let dir = folder.path().to_path_buf();
         let path = dir.join(name);
         let tmp = dir.join(format!("{name}.tmp"));
-        Writer { dir, path, tmp, file: None, good: None, held: Vec::new(), failed: None }
+        Writer { dir, path, tmp, folder, file: None, good: None, held: Vec::new(), failed: None }
     }
 
     fn hook(&self, step: crate::fault::Step) -> io::Result<()> {
@@ -166,6 +177,7 @@ impl Writer {
         if let (Some(_), Some(g)) = (&self.file, self.good) {
             return Ok(g);
         }
+        self.folder.check()?;
         // (a link or a device planted at the name meanwhile is refused, as at the first append)
         crate::store::check_regular_directory_entry(&self.path)?;
         let mut f = std::fs::OpenOptions::new().write(true).create(true).truncate(false).open(&self.path)?;
@@ -195,6 +207,7 @@ impl Writer {
             return Ok(());
         }
         let r = (|| {
+            self.folder.check()?;
             self.hook(crate::fault::Step::Write)?;
             self.open()?;
             let f = self.file.as_mut().ok_or_else(|| io::Error::other("catalog log not open"))?;
@@ -237,6 +250,7 @@ impl Writer {
             self.held.truncate(keep);
             return Ok(());
         }
+        self.folder.check()?;
         self.file = None;
         let f = match std::fs::OpenOptions::new().write(true).open(&self.path) {
             Ok(f) => f,
@@ -255,6 +269,7 @@ impl Writer {
     }
 
     fn replace(&mut self, data: &[u8]) -> io::Result<()> {
+        self.folder.check()?;
         self.file = None;
         let written = (|| {
             self.hook(crate::fault::Step::Write)?;

@@ -852,3 +852,69 @@ fn a_write_the_pruning_removes_is_not_reported_as_kept() {
     assert!(roomy.put(hash_bytes(b"fits"), &gradient(64, 64, 9)));
     let _ = std::fs::remove_dir_all(&dir);
 }
+
+/// The cache's folder as it is: every file with its bytes and its date.
+fn folder_as_is(dir: &std::path::Path) -> Vec<(String, Vec<u8>, std::time::SystemTime)> {
+    let mut out = Vec::new();
+    for f in files_under(dir) {
+        let p = dir.join(&f);
+        out.push((f, std::fs::read(&p).unwrap(), modified(&p)));
+    }
+    out
+}
+
+/// Given a cache whose gate says no (the library's path leads to another folder than the one it was
+/// opened from, issue #3240), when it is asked to write, prune, clear, tidy, or to read a thumbnail
+/// that it would take over, touch or remove, then its folder is as it was: nothing is written, made,
+/// renamed or removed, and reads still serve. With the gate open again, all of that works.
+#[test]
+fn a_closed_gate_keeps_the_cache_from_changing_its_folder() {
+    use std::sync::atomic::{AtomicBool, Ordering};
+    let dir = temp_dir("gate");
+    let open = Arc::new(AtomicBool::new(true));
+    let d = DiskCache::new(&dir, 10 << 20);
+    let flag = open.clone();
+    d.set_gate(Arc::new(move || flag.load(Ordering::SeqCst)));
+
+    let (kept, stale, old, junk) = (hash_bytes(b"kept"), hash_bytes(b"stale"), hash_bytes(b"old"), hash_bytes(b"junk"));
+    let path = |k: Hash128, ext: &str| {
+        let hex = k.to_string();
+        dir.join(&hex[..2]).join(format!("{hex}.{ext}"))
+    };
+    assert!(d.put(kept, &gradient(160, 100, 1)));
+    assert!(d.put(stale, &gradient(160, 100, 2)));
+    let jpeg = disk::encode_jpeg(&gradient(160, 100, 3)).unwrap();
+    for (key, ext, bytes) in [(old, "jpg", &jpeg[..]), (junk, "lcthumb", b"not a picture")] {
+        std::fs::create_dir_all(path(key, ext).parent().unwrap()).unwrap();
+        std::fs::write(path(key, ext), bytes).unwrap();
+    }
+    // not used for two months: reading it brings its date forward
+    let long_ago = std::time::SystemTime::now() - std::time::Duration::from_secs(60 * 24 * 3600);
+    std::fs::File::options().write(true).open(path(stale, "lcthumb")).unwrap().set_modified(long_ago).unwrap();
+    let before = folder_as_is(&dir);
+
+    open.store(false, Ordering::SeqCst);
+    assert!(!d.put(hash_bytes(b"new"), &gradient(160, 100, 4)), "not written");
+    assert!(d.get(kept).is_some() && d.get(stale).is_some(), "reads still serve, and touch nothing");
+    assert!(d.get(old).is_some(), "found under the name of before, and not renamed");
+    assert!(d.get(junk).is_none(), "unreadable, and not removed");
+    d.set_budget(1);
+    d.prune();
+    d.clear();
+    assert_eq!(d.take_over_old(&|| false, &|_, _| {}), 0);
+    assert_eq!(folder_as_is(&dir), before, "the folder is as it was");
+    // a folder that isn't there is not made
+    let fresh = temp_dir("gate-fresh").join("thumbs");
+    let nowhere = DiskCache::new(&fresh, 10 << 20);
+    nowhere.set_gate(Arc::new(|| false));
+    assert!(!nowhere.put(kept, &gradient(160, 100, 1)));
+    assert!(!fresh.exists());
+
+    open.store(true, Ordering::SeqCst);
+    d.set_budget(10 << 20);
+    assert_eq!(d.take_over_old(&|| false, &|_, _| {}), 1, "the thumbnail under the name of before is taken over");
+    assert!(d.get(junk).is_none() && !path(junk, "lcthumb").exists(), "an unreadable one goes");
+    assert!(d.put(hash_bytes(b"new"), &gradient(160, 100, 4)));
+    assert!(d.get(stale).is_some() && modified(&path(stale, "lcthumb")) > long_ago, "and one not used for long is touched");
+    let _ = std::fs::remove_dir_all(&dir);
+}
