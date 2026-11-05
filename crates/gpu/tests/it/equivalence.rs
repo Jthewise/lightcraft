@@ -52,11 +52,21 @@ fn check_v3_luminance_cutoff(chroma: f32, pixel: [f32; 3], expected: [u8; 4]) {
     let req = RenderRequest::fit(64, 64);
     let cpu = render(&src, &info, &s, &req).image;
     let gpu = lightcraft_gpu::try_render(&src, &info, &s, &req, None).expect("GPU render without CPU fallback").image;
-    for image in [&cpu, &gpu] {
-        // (8-bit output is dithered: a flat source varies by a level)
-        assert!(image.data.iter().all(|p| p.iter().zip(image.data[0]).all(|(a, b)| a.abs_diff(b) <= 1)));
-        for (actual, expected) in image.data[0].into_iter().zip(expected) {
-            assert!(actual.abs_diff(expected) <= 1, "chroma {chroma}: {:?}, expected {expected}", image.data[0]);
+    for (name, image) in [("CPU", &cpu), ("GPU", &gpu)] {
+        // Ordered output dithering varies a uniform source by one 8-bit level.
+        // Every pixel must still stay at the calibrated cutoff colour.
+        let spans: [u8; 3] = std::array::from_fn(|c| {
+            let min = image.data.iter().map(|p| p[c]).min().unwrap();
+            let max = image.data.iter().map(|p| p[c]).max().unwrap();
+            max - min
+        });
+        eprintln!("chroma {chroma} {name}: first {:?}, channel spans {spans:?}", image.data[0]);
+        assert!(spans.into_iter().all(|span| span <= 1), "chroma {chroma} {name}: {spans:?}");
+        for pixel in &image.data {
+            assert_eq!(pixel[3], 255, "opaque output");
+            for (actual, expected) in pixel.iter().copied().zip(expected) {
+                assert!(actual.abs_diff(expected) <= 1, "chroma {chroma}: {pixel:?}, expected {expected}");
+            }
         }
     }
     let (_, max, _) = diff(&cpu, &gpu);
