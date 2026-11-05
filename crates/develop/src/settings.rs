@@ -88,7 +88,9 @@ pub enum Process {
     V3,
     /// V3, with Contrast and Blacks on a raw's camera look calibrated to Lightroom: the
     /// camera curve keeps V2 Whites and fitted pointwise operators follow it
-    /// (`lightcraft_pipeline::light_v3`, `docs/light-v3.md`).
+    /// (`lightcraft_pipeline::light_v3`, `docs/light-v3.md`). Film grain comes from a stack of
+    /// crystal layers (after Aurélien Pierre's model): resolution independent, fading out at black
+    /// and white; V1 to V3 keep their value noise.
     V4,
 }
 
