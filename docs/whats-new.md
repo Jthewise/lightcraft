@@ -10,6 +10,12 @@
 
 ## 2026-10-30
 
+### Dark Sony uncompressed RAWs keep their colours
+- Uncompressed Sony files that report 12 bits but store 16-bit words now use the same sample scale in dark and
+  bright scenes. On affected ILCA-99M2 photos, the old brightness-dependent scale subtracted the wrong black level,
+  so the image turned purple after its camera preview was replaced by the RAW render. Existing cached previews
+  and denoise results are refreshed from the original when it is available; no conversion is needed.
+
 ### Lens distortion correction for the Sony A7 III
 - Raws from the Sony A7 III (ILCE-7M3) now get the camera's own distortion correction, read from the file, like
   the A7R IVA's: straight lines stay straight at wide angles (the FE 16–35 F4 ZA at 16 mm shifts detail near the
