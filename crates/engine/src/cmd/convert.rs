@@ -194,10 +194,42 @@ fn edit_copy(s: &mut Session, p: &Value, id: lightcraft_catalog::PhotoId, opts: 
     let ext = format!(".{}", opts.format.extension());
     let out = written.into_iter().find(|w| w.ends_with(&ext)).ok_or_else(|| bad(C, "nothing was written"))?;
     let r = s.execute("library.import", &json!({"paths": [out]}))?;
-    let new = r["imported"].get(0).and_then(Value::as_u64).ok_or_else(|| bad(C, "the edit copy could not be added"))?;
-    // stack: the edit on top of the original, expanded so both show
-    let _ = s.execute("stack.group", &json!({"ids": [new, id.0], "top": new, "collapsed": false}));
+    let Some(new) = r["imported"].get(0).and_then(Value::as_u64) else {
+        // the render is the same bytes as a copy the library already has (the last one was never changed): that copy
+        // is the one to open, and the file just written is an orphan nobody would ever see (#3617), unless import
+        // restored a trashed copy by relinking it to this very file
+        let existing = r["restored"]
+            .get(0)
+            .and_then(Value::as_u64)
+            .or_else(|| r["duplicates"].get(0).and_then(|d| d["existing"].as_u64()))
+            .and_then(|i| s.catalog.photo(lightcraft_catalog::PhotoId(i)))
+            .filter(|p| !p.deleted)
+            .and_then(|p| match &p.source {
+                Source::File { path } => Some((p.id.0, path.clone())),
+                Source::Demo { .. } => None,
+            });
+        if existing.as_ref().is_none_or(|(_, path)| *path != out) {
+            let _ = std::fs::remove_file(&out);
+        }
+        return match existing {
+            Some((copy, path)) => {
+                // a restored copy left its stack when it was deleted; one still stacked on the original stays as it is
+                let stacked = s.catalog.stack_of(lightcraft_catalog::PhotoId(copy)).is_some_and(|st| st.photos.contains(&id));
+                if !stacked {
+                    stack_on_top(s, copy, id.0);
+                }
+                Ok(json!({"path": path, "id": copy, "original": id.0}))
+            }
+            None => Err(bad(C, "the edit copy could not be added")),
+        };
+    };
+    stack_on_top(s, new, id.0);
     Ok(json!({"path": out, "id": new, "original": id.0}))
+}
+
+/// Stack an edit copy on top of its original, expanded so both show.
+fn stack_on_top(s: &mut Session, copy: u64, original: u64) {
+    let _ = s.execute("stack.group", &json!({"ids": [copy, original], "top": copy, "collapsed": false}));
 }
 
 /// The op that brings a photo up to date with what its file is now (`info`, a fresh probe), or

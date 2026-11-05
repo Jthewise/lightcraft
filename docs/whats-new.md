@@ -21,6 +21,15 @@
   hot pixels on a sensor. Stars and other points of light that are kept don't count, so a dense star field still
   loses its hot pixels. Settings ▸ Performance ▸ Hot pixel limit sets the share (0.05 % to 1 %).
 
+## 2026-11-05
+
+### Edit in Other Editor works again on a photo whose copy was never changed
+- Running Edit in Other Editor a second time on a photo, with its first copy left as LightCraft rendered it (the editor
+  didn't open, or was closed without saving), failed with "invalid parameters for `photo.editExternal`", never opened
+  the editor, and left another full-size `-Edit-N.tif` on disk each time. The render is the same bytes as the existing
+  copy, so the library skipped it as a duplicate. The editor now opens that existing copy, and the file just written
+  is removed.
+
 ## 2026-11-02
 
 ### The Windows title bar is readable from the moment the window opens
