@@ -10,10 +10,14 @@ use serde_json::{Value, json};
 
 use crate::backend::{Backend, ProgressHook};
 
+use lightcraft_engine::file_access::AutomationRoots;
+use std::sync::Arc;
+
 /// Headless backend: a [`Session`] with filesystem hooks.
 pub struct Headless {
     pub session: Session,
     progress: Option<ProgressHook>,
+    pub roots: Option<Arc<AutomationRoots>>,
 }
 
 impl Drop for Headless {
@@ -38,7 +42,15 @@ impl Default for Headless {
 
 impl Headless {
     pub fn new(session: Session) -> Self {
-        Self { session, progress: None }
+        Self { session, progress: None, roots: None }
+    }
+
+    /// The automation roots of this backend's calls, on the calling thread only: worker threads
+    /// see the process's roots, so a server that hosts agents also needs
+    /// [`confine_process`](lightcraft_engine::file_access::confine_process), as `lightcraft-cli mcp` does.
+    pub fn with_automation_roots(mut self, roots: impl Into<Option<Arc<AutomationRoots>>>) -> Self {
+        self.roots = roots.into();
+        self
     }
 
     /// A headless session with the procedurally generated demo library.
@@ -63,6 +75,7 @@ impl Headless {
     /// With `path` and no `format`, the format follows the path's extension.
     fn export(&mut self, p: &Value) -> Result<Value, String> {
         use lightcraft_engine::export::{Destination, ExportFormat, ExportOptions, Resize, prepare_batch, run_batch};
+        lightcraft_engine::file_access::check_command("app.export", p)?;
         let p = &self.session.export_params_or(p, ExportFormat::Png)?;
         // PNG for a `path` that names no format; `bitDepth` is checked against the format written
         let mut opts = ExportOptions::from_params_or(p, ExportFormat::Png).map_err(|e| e.to_string())?;
@@ -121,40 +134,51 @@ impl Backend for Headless {
     }
 
     fn call(&mut self, method: &str, params: Value) -> Result<Value, String> {
-        let p = if params.is_null() { json!({}) } else { params };
-        match method {
-            "engine.execute" | "ui.menu.invoke" | "command" => {
-                let id = p.get("command").or(p.get("id")).and_then(Value::as_str).ok_or("missing `command`")?;
-                let params = p.get("params").cloned().filter(|v| !v.is_null()).unwrap_or(json!({}));
-                if id == "app.export" {
-                    return self.export(&params);
-                }
-                self.session.execute(id, &params).map_err(|e| e.to_string())
-            }
-            "engine.commands" => {
-                let mut v: Vec<Value> = self.session.commands().into_iter().map(|c| serde_json::to_value(c).unwrap_or_default()).collect();
-                v.push(json!({"id": "app.export", "label": "Export Now", "menu": [], "shortcut": null,
-                    "params": "{path?: output file (.jpg/.png/.tif/.webp/.avif/.jxl/.psd/.dng) | dir?, ids?, preset?, format?: jpeg|png|tiff|webp|avif|jxl|psd|dng|original, longEdge?|shortEdge?|width?|height?|megapixels?|percent? (default longEdge 3000; longEdge 0 = full size), fit?: dimensions|widthHeight (with width + height: dimensions fits either orientation, widthHeight limits the width to `width` and the height to `height`), dontEnlarge?, ppi?, quality?: 1..100, jxlLossless?, jxlEffort?: fast|normal, jxlProgressive?, limitKb?, colorSpace?: srgb|displayP3|adobeRgb|proPhoto|rec2020, bitDepth?: 8|10|16|32, hdr? (HDR output for HDR edits: gain map JPEG, PQ AVIF / PNG / JPEG XL, float TIFF), sharpen?: none|screen|matte|glossy, sharpenAmount?: low|standard|high, metadata?: all|allExceptCamera|copyright|none, removeLocation?, naming?, startNumber?, destinationMode?: specificFolder|sameAsOriginal (sameAsOriginal = each photo into its original's folder; `dir` unused), subfolder?, conflict?: unique|overwrite|skip, tiffCompression?: none|lzw|zip (default zip; lzw is usually larger and slower than zip, at 16 bit often larger than none: only for software that needs LZW), dngCompression?: lossless|deflate|uncompressed, addToPhotos?: bool (macOS: then add the files written to Apple Photos; outcome in `applePhotos`), photosAlbum?: top-level album name (made when missing), watermark?: text | {text?, vertical? (upright columns, right to left), size? (text height, 0.005..0.5 of the short edge; default 0.035), opacity? (0..1; 0.7), anchor?: topLeft|top|topRight|left|center|right|bottomLeft|bottom|bottomRight, insetX? (margin from the left/right edge, 0..0.4 of the short edge; 0.025), insetY? (from the top/bottom edge; 0.025), inset? (sets both), rotation?: 0|90|180|270 (degrees clockwise; 0), color? [r,g,b] sRGB, shadow?, image? (graphic drawn instead of the text), imageWidth? (0.01..1 of the photo's width; 0.2)}} — an unknown parameter, an out-of-range watermark size or a value of the wrong kind is an error, not a default",
-                    "enabled": self.session.active().is_some()}));
-                Ok(Value::Array(v))
-            }
-            "ui.render" => {
-                let img = self.render(&p, 1600)?;
-                match p.get("path").and_then(Value::as_str) {
-                    Some(path) => {
-                        self.session.check_write_target(path)?;
-                        write_image(Path::new(path), &img, 92)?;
-                        Ok(json!({"path": path, "width": img.width, "height": img.height}))
+        let roots = self.roots.clone();
+        lightcraft_engine::file_access::confine(roots.as_ref(), || {
+            let p = if params.is_null() { json!({}) } else { params };
+            match method {
+                "engine.execute" | "ui.menu.invoke" | "command" => {
+                    let id = p.get("command").or(p.get("id")).and_then(Value::as_str).ok_or("missing `command`")?;
+                    let params = p.get("params").cloned().filter(|v| !v.is_null()).unwrap_or(json!({}));
+                    if id == "app.export" {
+                        return self.export(&params);
                     }
-                    None => Ok(json!({"width": img.width, "height": img.height})),
+                    self.session.execute(id, &params).map_err(|e| e.to_string())
                 }
+                "engine.commands" => {
+                    let mut v: Vec<Value> = self.session.commands().into_iter().map(|c| serde_json::to_value(c).unwrap_or_default()).collect();
+                    v.push(json!({"id": "app.export", "label": "Export Now", "menu": [], "shortcut": null,
+                        "params": "{path?: output file (.jpg/.png/.tif/.webp/.avif/.jxl/.psd/.dng) | dir?, ids?, preset?, format?: jpeg|png|tiff|webp|avif|jxl|psd|dng|original, longEdge?|shortEdge?|width?|height?|megapixels?|percent? (default longEdge 3000; longEdge 0 = full size), fit?: dimensions|widthHeight (with width + height: dimensions fits either orientation, widthHeight limits the width to `width` and the height to `height`), dontEnlarge?, ppi?, quality?: 1..100, jxlLossless?, jxlEffort?: fast|normal, jxlProgressive?, limitKb?, colorSpace?: srgb|displayP3|adobeRgb|proPhoto|rec2020, bitDepth?: 8|10|16|32, hdr? (HDR output for HDR edits: gain map JPEG, PQ AVIF / PNG / JPEG XL, float TIFF), sharpen?: none|screen|matte|glossy, sharpenAmount?: low|standard|high, metadata?: all|allExceptCamera|copyright|none, removeLocation?, naming?, startNumber?, destinationMode?: specificFolder|sameAsOriginal (sameAsOriginal = each photo into its original's folder; `dir` unused), subfolder?, conflict?: unique|overwrite|skip, tiffCompression?: none|lzw|zip (default zip; lzw is usually larger and slower than zip, at 16 bit often larger than none: only for software that needs LZW), dngCompression?: lossless|deflate|uncompressed, addToPhotos?: bool (macOS: then add the files written to Apple Photos; outcome in `applePhotos`), photosAlbum?: top-level album name (made when missing), watermark?: text | {text?, vertical? (upright columns, right to left), size? (text height, 0.005..0.5 of the short edge; default 0.035), opacity? (0..1; 0.7), anchor?: topLeft|top|topRight|left|center|right|bottomLeft|bottom|bottomRight, insetX? (margin from the left/right edge, 0..0.4 of the short edge; 0.025), insetY? (from the top/bottom edge; 0.025), inset? (sets both), rotation?: 0|90|180|270 (degrees clockwise; 0), color? [r,g,b] sRGB, shadow?, image? (graphic drawn instead of the text), imageWidth? (0.01..1 of the photo's width; 0.2)}} — an unknown parameter, an out-of-range watermark size or a value of the wrong kind is an error, not a default",
+                        "enabled": self.session.active().is_some()}));
+                    Ok(Value::Array(v))
+                }
+                "ui.render" => {
+                    let img = self.render(&p, 1600)?;
+                    match p.get("path").and_then(Value::as_str) {
+                        Some(path) => {
+                            self.session.check_write_target(path)?;
+                            write_image(Path::new(path), &img, 92)?;
+                            Ok(json!({"path": path, "width": img.width, "height": img.height}))
+                        }
+                        None => {
+                            let bytes = encode_image("png", &img, 92)?;
+                            Ok(json!({"width": img.width, "height": img.height, "data": crate::base64::base64_encode(&bytes)}))
+                        }
+                    }
+                }
+                "app.export" => self.export(&p),
+                m if m.starts_with("ui.") || m == "app.quit" => {
+                    Err(format!("`{m}` needs the desktop app: start `lightcraft --control 7980` and run the MCP server with `--connect`"))
+                }
+                other => Err(format!("unknown method `{other}`")),
             }
-            "app.export" => self.export(&p),
-            m if m.starts_with("ui.") || m == "app.quit" => {
-                Err(format!("`{m}` needs the desktop app: start `lightcraft --control 7980` and run the MCP server with `--connect`"))
-            }
-            other => Err(format!("unknown method `{other}`")),
-        }
+        })
+    }
+
+    /// The roots this backend was given.
+    fn automation_roots(&self) -> Option<Arc<AutomationRoots>> {
+        self.roots.clone()
     }
 
     fn has_ui(&self) -> bool {
@@ -162,7 +186,19 @@ impl Backend for Headless {
     }
 
     fn describe(&self) -> String {
-        "headless".into()
+        match &self.roots {
+            Some(r) => {
+                let mut parts = vec!["headless".to_string()];
+                if let Some(read) = r.read_root() {
+                    parts.push(format!("read: {}", read.display()));
+                }
+                if let Some(write) = r.write_root() {
+                    parts.push(format!("write: {}", write.display()));
+                }
+                parts.join(", ")
+            }
+            None => "headless".into(),
+        }
     }
 }
 

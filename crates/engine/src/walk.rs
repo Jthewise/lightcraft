@@ -138,9 +138,15 @@ fn walk(
     let mut stack: Vec<(PathBuf, usize, bool)> = vec![(root.to_path_buf(), 0, true)];
     while let Some((path, depth, is_dir)) = stack.pop() {
         if !is_dir {
+            if crate::file_access::check_read(&path).is_err() {
+                continue;
+            }
             if keep(&path) {
                 out.files.push(path);
             }
+            continue;
+        }
+        if crate::file_access::check_read(&path).is_err() {
             continue;
         }
         if skip.is_some_and(|s| path == s) || skip_canonical.as_ref().is_some_and(|s| std::fs::canonicalize(&path).is_ok_and(|p| p.starts_with(s))) {
@@ -188,6 +194,10 @@ fn walk(
             }
             let Ok(ft) = ft else { continue };
             let dir = if ft.is_symlink() {
+                // (a link out of the automation roots is passed over, whatever it leads to)
+                if crate::file_access::check_read(&p).is_err() {
+                    continue;
+                }
                 // a link (or a Windows junction): a folder is entered once, a file is a file
                 match std::fs::metadata(&p) {
                     Ok(m) if m.is_dir() => {
