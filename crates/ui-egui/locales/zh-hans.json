@@ -2398,5 +2398,10 @@
   "Set up name suggestions…": "设置姓名建议…",
   "Top bar": "顶部栏",
   "Tool strip": "工具栏",
-  "Bottom bar": "底部栏"
+  "Bottom bar": "底部栏",
+  "Click to name this face": "点击命名此面孔",
+  "Already installed. Installing again is harmless.": "已安装。再次安装无害。",
+  "Enter to confirm, Esc to cancel": "按 Enter 确认，按 Esc 取消",
+  "Show photos": "显示照片",
+  "Their photos in the grid": "网格中他们的照片"
 }
